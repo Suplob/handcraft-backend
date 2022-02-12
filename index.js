@@ -39,6 +39,12 @@ async function run() {
       });
       res.json(result);
     });
+    app.get("/myOrder/:email", async (req, res) => {
+      const result = await ordersCollection
+        .find({ email: req.params.email })
+        .toArray();
+      res.json(result);
+    });
 
     // post methods
     app.post("/order", async (req, res) => {
