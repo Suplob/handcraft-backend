@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
+const ObjectId = require("mongodb").ObjectId;
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -17,7 +18,6 @@ async function run() {
     useUnifiedTopology: true,
   });
 
-  console.log(uri);
   try {
     await client.connect();
 
@@ -30,6 +30,12 @@ async function run() {
     });
     app.get("/servicesLimited", async (req, res) => {
       const result = await servicesCollection.find({}).limit(6).toArray();
+      res.json(result);
+    });
+    app.get("/service/:id", async (req, res) => {
+      const result = await servicesCollection.findOne({
+        _id: ObjectId(req.params.id),
+      });
       res.json(result);
     });
   } catch {
