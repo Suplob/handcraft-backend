@@ -22,6 +22,7 @@ async function run() {
     await client.connect();
 
     const servicesCollection = client.db("HandCraft").collection("services");
+    const ordersCollection = client.db("HandCraft").collection("orders");
 
     //get methods
     app.get("/services", async (req, res) => {
@@ -36,6 +37,12 @@ async function run() {
       const result = await servicesCollection.findOne({
         _id: ObjectId(req.params.id),
       });
+      res.json(result);
+    });
+
+    // post methods
+    app.post("/order", async (req, res) => {
+      const result = await ordersCollection.insertOne(req.body);
       res.json(result);
     });
   } catch {
