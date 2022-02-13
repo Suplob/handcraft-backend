@@ -24,6 +24,7 @@ async function run() {
     const servicesCollection = client.db("HandCraft").collection("services");
     const ordersCollection = client.db("HandCraft").collection("orders");
     const reviewsCollection = client.db("HandCraft").collection("review");
+    const usersCollection = client.db("HandCraft").collection("users");
 
     //get methods
     app.get("/services", async (req, res) => {
@@ -55,6 +56,10 @@ async function run() {
 
     app.post("/addReview", async (req, res) => {
       const result = await reviewsCollection.insertOne(req.body);
+      res.json(result);
+    });
+    app.post("/addUserToDb", async (req, res) => {
+      const result = await usersCollection.insertOne(req.body);
       res.json(result);
     });
 
