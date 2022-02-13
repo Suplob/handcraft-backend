@@ -5,9 +5,11 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const ObjectId = require("mongodb").ObjectId;
 const PORT = process.env.PORT || 5000;
+const fileUpload = require("express-fileupload");
 
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 
 app.get("/", (req, res) => res.send("server side of HandCraft"));
 
@@ -59,8 +61,11 @@ async function run() {
       res.json(result);
     });
     app.post("/addUserToDb", async (req, res) => {
-      const result = await usersCollection.insertOne(req.body);
-      res.json(result);
+      console.log(req.body);
+      console.log(req.files);
+
+      // const result = await usersCollection.insertOne(req.body);
+      // res.json(result);
     });
 
     //delete methods
