@@ -23,6 +23,7 @@ async function run() {
 
     const servicesCollection = client.db("HandCraft").collection("services");
     const ordersCollection = client.db("HandCraft").collection("orders");
+    const reviewsCollection = client.db("HandCraft").collection("review");
 
     //get methods
     app.get("/services", async (req, res) => {
@@ -52,11 +53,17 @@ async function run() {
       res.json(result);
     });
 
+    app.post("/addReview", async (req, res) => {
+      const result = await reviewsCollection.insertOne(req.body);
+      res.json(result);
+    });
+
     //delete methods
     app.delete("/cancelOrder/:id", async (req, res) => {
       const result = await ordersCollection.deleteOne({
         _id: ObjectId(req.params.id),
       });
+      g;
       res.json(result);
     });
   } catch {
