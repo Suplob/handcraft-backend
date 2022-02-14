@@ -50,6 +50,11 @@ async function run() {
       res.json(result);
     });
 
+    app.get("/reviews", async (req, res) => {
+      const result = await reviewsCollection.find({}).toArray();
+      res.json(result);
+    });
+
     // post methods
     app.post("/order", async (req, res) => {
       const result = await ordersCollection.insertOne(req.body);
@@ -57,15 +62,25 @@ async function run() {
     });
 
     app.post("/addReview", async (req, res) => {
-      const result = await reviewsCollection.insertOne(req.body);
+      const name = req.body.name;
+      const email = req.body.email;
+      const review = req.body.review;
+      const rating = req.body.rating;
+
+      const picture = req.files.image;
+      const picData = picture.data;
+      const encodedPic = picData.toString("base64");
+      const imageBuffer = Buffer.from(encodedPic, "base64");
+
+      const reviewData = { name, email, review, rating, image: imageBuffer };
+
+      const result = await reviewsCollection.insertOne(reviewData);
       res.json(result);
     });
-    app.post("/addUserToDb", async (req, res) => {
-      console.log(req.body);
-      console.log(req.files);
 
-      // const result = await usersCollection.insertOne(req.body);
-      // res.json(result);
+    app.post("/addUserToDb", async (req, res) => {
+      const result = await usersCollection.insertOne(req.body);
+      res.json(result);
     });
 
     //delete methods
