@@ -114,6 +114,13 @@ async function run() {
       );
       res.json(result);
     });
+    app.put("/changeStatus/:id", async (req, res) => {
+      const result = ordersCollection.updateOne(
+        { _id: ObjectId(req.params.id) },
+        { $set: { status: "Confirmed" } }
+      );
+      res.json(result);
+    });
   } catch {
     // await client.close();
   }
