@@ -88,7 +88,6 @@ async function run() {
       const result = await ordersCollection.deleteOne({
         _id: ObjectId(req.params.id),
       });
-      g;
       res.json(result);
     });
   } catch {
