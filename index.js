@@ -56,7 +56,8 @@ async function run() {
     });
 
     app.get("/users/:email", async (req, res) => {
-      const result = await usersCollection.findOne({ email: req.params.email });
+      const email = req.params.email;
+      const result = await usersCollection.findOne({ email: email });
       let isAdmin = false;
       if (result.role === "admin") {
         isAdmin = true;
