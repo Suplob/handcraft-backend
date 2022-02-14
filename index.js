@@ -65,6 +65,11 @@ async function run() {
       res.json({ admin: isAdmin });
     });
 
+    app.get("/orders", async (req, res) => {
+      const result = await ordersCollection.find({}).toArray();
+      res.json(result);
+    });
+
     // post methods
     app.post("/order", async (req, res) => {
       const result = await ordersCollection.insertOne(req.body);
