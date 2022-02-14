@@ -55,6 +55,15 @@ async function run() {
       res.json(result);
     });
 
+    app.get("/users/:email", async (req, res) => {
+      const result = await usersCollection.findOne({ email: req.params.email });
+      let isAdmin = false;
+      if (result.role === "admin") {
+        isAdmin = true;
+      }
+      res.json({ admin: isAdmin });
+    });
+
     // post methods
     app.post("/order", async (req, res) => {
       const result = await ordersCollection.insertOne(req.body);
