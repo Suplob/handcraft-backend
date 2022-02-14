@@ -100,6 +100,15 @@ async function run() {
       });
       res.json(result);
     });
+
+    //put methods
+    app.put("/addAdmin/:email", async (req, res) => {
+      const result = usersCollection.updateOne(
+        { email: req.params.email },
+        { $set: { role: "admin" } }
+      );
+      res.json(result);
+    });
   } catch {
     // await client.close();
   }
