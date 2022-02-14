@@ -59,7 +59,7 @@ async function run() {
       const email = req.params.email;
       const result = await usersCollection.findOne({ email: email });
       let isAdmin = false;
-      if (result.role === "admin") {
+      if (result?.role === "admin") {
         isAdmin = true;
       }
       res.json({ admin: isAdmin });
