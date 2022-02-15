@@ -1,4 +1,4 @@
-# car house server side code
+# hand craft server side code
 
 [link to client side code](https://github.com/Suplob/handcraft)
 
